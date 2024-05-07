@@ -1,7 +1,7 @@
 <?php
-require_once __DIR__ . '/../Controllers/GenerateCsvController.php';
+require_once __DIR__ . '/../Controllers/CsvController.php';
 
-use App\Controllers\GenerateCsvController;
+use App\Controllers\CsvController;
 
 $num_records = 0;
 
@@ -9,7 +9,7 @@ if (isset($_POST['num_records'])) {
     $num_records = $_POST['num_records'];
 }
 
-GenerateCsvController::generateCSV($num_records);
+CsvController::generateCSV($num_records);
 ?>
 
 <h1>CSV Generator</h1>
