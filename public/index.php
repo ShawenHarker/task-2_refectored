@@ -13,5 +13,8 @@
 
     use App\App;
 
-    $app = new App();
-    $app->run();
+    App::run();
+    ?>
+</body>
+
+</html>

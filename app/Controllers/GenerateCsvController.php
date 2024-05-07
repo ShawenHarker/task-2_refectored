@@ -4,12 +4,14 @@ namespace App\Controllers;
 
 class GenerateCsvController
 {
-    public function generateCSV($num_records, $names, $surnames)
+    public static function generateCSV($num_records)
     {
+        $names = array("John", "Emma", "Michael", "Sophia", "William", "Olivia", "James", "Ava", "Benjamin", "Isabella", "Jacob", "Mia", "Ethan", "Charlotte", "Alexander", "Amelia", "Henry", "Harper", "Daniel", "Evelyn");
+        $surnames = array("Smith", "Johnson", "Williams", "Jones", "Brown", "Davis", "Miller", "Wilson", "Moore", "Taylor", "Anderson", "Thomas", "Jackson", "White", "Harris", "Martin", "Thompson", "Garcia", "Martinez", "Robinson");
 
         set_time_limit(0);
 
-        $outputFolder = __DIR__ . '/output/';
+        $outputFolder = __DIR__ . '/../../public/output/';
 
         if (!file_exists($outputFolder)) {
             mkdir($outputFolder, 755, true);
@@ -46,7 +48,7 @@ class GenerateCsvController
             $randomDay = mt_rand(1, 28);
             $randomMonth = mt_rand(1, 12);
 
-            $randomDOB = date("d-m-Y", mktime(0, 0, 0, $randomMonth, $randomDay, $currentYear - $age));
+            $randomDOB = date("d/m/Y", mktime(0, 0, 0, $randomMonth, $randomDay, $currentYear - $age));
 
             return $randomDOB;
         }
@@ -68,7 +70,5 @@ class GenerateCsvController
         }
 
         fclose($output);
-
-        require_once __DIR__ . '/../Views/GenerateCsvView.php';
     }
 }

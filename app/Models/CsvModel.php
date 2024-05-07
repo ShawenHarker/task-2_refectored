@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+require_once __DIR__ . '/../../vendor/autoload.php';
+
 use PDO;
 use PDOException;
+use Dotenv\Dotenv;
 
 class CsvModel
 {
@@ -11,7 +14,12 @@ class CsvModel
 
     public function __construct()
     {
-        $this->pdo = new PDO('sqlite:../app/task-2_refactored.db');
+        $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
+        $dotenv->load();
+
+        $host = $_ENV['DB_HOST'];
+
+        $this->pdo = new PDO($host);
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $this->createTable();
     }
@@ -42,10 +50,11 @@ class CsvModel
                 $num_rows = 0;
 
                 while (($data = fgetcsv($csvFileHandle)) !== false) {
+                    $data[5] = date('Y-m-d', strtotime($data[5]));
                     $insertData->execute($data);
                     $num_rows++;
 
-                    if ($num_rows % $batchSize === 0) {
+                    if ($num_rows % $batchSize === 0) { // checking if the remainder of num_rows divided by batch_size is 0
                         $this->pdo->commit();
                         $this->pdo->beginTransaction();
                     }

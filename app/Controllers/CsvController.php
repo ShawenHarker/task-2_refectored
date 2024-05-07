@@ -9,10 +9,8 @@ use PDOException;
 
 class CsvController
 {
-    public function upload()
+    public static function upload()
     {
-        require_once __DIR__ . '/../Views/UploadFileView.php';
-
         $status = '';
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
